@@ -24,7 +24,7 @@ jobs:
       run: python tests.py
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-flask-app:latest
+      run: docker build . --file Dockerfile --tag testing/my-flask-app:latest
 
     - name: "Configure AWS Credentials" 
       uses: aws-actions/configure-aws-credentials@v4
