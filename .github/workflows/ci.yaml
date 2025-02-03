@@ -38,6 +38,6 @@ jobs:
 
     - name: Push the Docker Image to ECR
       run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v0m7a4i7
-        docker tag my-flask-app:latest public.ecr.aws/v0m7a4i7/my-flask-app:latest
-        docker push public.ecr.aws/v0m7a4i7/my-flask-app:latest
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 864981728406.dkr.ecr.ap-south-1.amazonaws.com
+        docker tag testing/my-flask-app:latest 864981728406.dkr.ecr.ap-south-1.amazonaws.com/testing/my-flask-app:latest
+        docker push 864981728406.dkr.ecr.ap-south-1.amazonaws.com/testing/my-flask-app:latest
