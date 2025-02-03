@@ -1,0 +1,43 @@
+name: Python Flask App Build and Deploy to EC2 Instance
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install Python Modules
+      run: pip install -r requirements.txt
+
+    - name: Run Unit Test Cases
+      run: python tests.py
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-flask-app:latest
+
+    - name: "Configure AWS Credentials" 
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ secrets.AWS_REGION }} 
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Amazon ECR "Login" Action for GitHub Actions
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Push the Docker Image to ECR
+      run: |
+        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v0m7a4i7
+        docker tag my-flask-app:latest public.ecr.aws/v0m7a4i7/my-flask-app:latest
+        docker push public.ecr.aws/v0m7a4i7/my-flask-app:latest
