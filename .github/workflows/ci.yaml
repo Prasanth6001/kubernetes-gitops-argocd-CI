@@ -1,4 +1,4 @@
-name: Nginx-app
+name: Nginx-app$
 on:
   push:
     branches: [ "master" ]
