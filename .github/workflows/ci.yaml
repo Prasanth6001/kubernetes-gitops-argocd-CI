@@ -26,6 +26,6 @@ jobs:
 
     - name: Push the Docker Image to ECR
       run: |
-        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 762233743348.dkr.ecr.eu-north-1.amazonaws.com
+        aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 762233743348.dkr.ecr.eu-north-1.amazonaws.com
         docker tag testing/nginx-app:1.0 762233743348.dkr.ecr.eu-north-1.amazonaws.com/testing/nginx-app:1.0
         docker push 762233743348.dkr.ecr.eu-north-1.amazonaws.com/testing/nginx-app:1.0
